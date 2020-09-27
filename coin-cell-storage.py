@@ -6,6 +6,10 @@ from solid.utils import *
 SEGMENTS = 48
 
 storage_unit_def = {
+    "order": [
+        "CR1632",
+        "CR2025",
+    ],
     "types": {
         "default": {
             "battery_clearance": 0.5,
@@ -15,29 +19,149 @@ storage_unit_def = {
             "slot_margin": 2,
             "slot_angle": -15,
             "tower_bottom_margin": 2.5,
+            "battery_count": 10,
+        },
+        "CR3032": {
+            "label": "CR3032",
+            "battery_diameter": 30,
+            "battery_height": 3.2,
+        },
+        "CR2016": {
+            "label": "CR2016",
+            "battery_diameter": 20,
+            "battery_height": 1.6,
+        },
+        "CR2330": {
+            "label": "CR2330",
+            "battery_diameter": 20,
+            "battery_height": 3.2,
+        },
+        "CR2032": {
+            "label": "CR2032",
+            "battery_diameter": 20,
+            "battery_height": 3.2,
+        },
+        "CR1220": {
+            "label": "CR1220",
+            "battery_diameter": 12.5,
+            "battery_height": 2.0,
         },
         "CR1632": {
             "label": "CR1632",
-            "battery_count": 10,
-            "battery_height": 3,
-            "battery_diameter": 15.8,
+            "battery_diameter": 16,
+            "battery_height": 3.2,
+        },
+        "CR927": {
+            "label": "CR927",
+            "battery_diameter": 9.5,
+            "battery_height": 2.7,
+        },
+        "CR1025": {
+            "label": "CR1025",
+            "battery_diameter": 10,
+            "battery_height": 2.5,
+        },
+        "CR1130": {
+            "label": "CR1130",
+            "battery_diameter": 11.5,
+            "battery_height": 3.0,
+        },
+        "CR1216": {
+            "label": "CR1216",
+            "battery_diameter": 12.5,
+            "battery_height": 1.6,
+        },
+        "CR1225": {
+            "label": "CR1225",
+            "battery_diameter": 12.5,
+            "battery_height": 2.5,
+        },
+        "CR1616": {
+            "label": "CR1616",
+            "battery_diameter": 16,
+            "battery_height": 1.6,
+        },
+        "CR1620": {
+            "label": "CR1620",
+            "battery_diameter": 16,
+            "battery_height": 2.0,
+        },
+        "CR2012": {
+            "label": "CR2012",
+            "battery_diameter": 20,
+            "battery_height": 1.2,
+        },
+        "CR2020": {
+            "label": "CR2020",
+            "battery_diameter": 20,
+            "battery_height": 2,
         },
         "CR2025": {
             "label": "CR2025",
-            "battery_count": 11,
+            "battery_diameter": 20,
             "battery_height": 2.5,
-            "battery_diameter": 19.8,
+        },
+        "CR2040": {
+            "label": "CR2040",
+            "battery_diameter": 20,
+            "battery_height": 4.0,
+        },
+        "CR2050": {
+            "label": "CR2050",
+            "battery_diameter":  20,
+            "battery_height": 5.0,
+        },
+        "CR2320": {
+            "label": "CR2320",
+            "battery_diameter": 23,
+            "battery_height": 2,
+        },
+        "CR2325": {
+            "label": "CR2325",
+            "battery_diameter": 23,
+            "battery_height": 2.5,
+        },
+        "BR2335": {
+            "label": "BR2335",
+            "battery_diameter": 23,
+            "battery_height": 3.5,
+        },
+        "CR2354": {
+            "label": "CR2354",
+            "battery_diameter": 23,
+            "battery_height": 5.4,
+        },
+        "CR2412": {
+            "label": "CR2412",
+            "battery_diameter": 24.5,
+            "battery_height": 1.2,
+        },
+        "CR2430": {
+            "label": "CR2430",
+            "battery_diameter": 24.5,
+            "battery_height": 3.0,
+        },
+        "CR2450": {
+            "label": "CR2450",
+            "battery_diameter": 4.5,
+            "battery_height": 5.0,
+        },
+        "CR2477": {
+            "label": "CR2477",
+            "battery_diameter": 24.5,
+            "battery_height": 7.7,
+        },
+        "CR11108": {
+            "label": "CR11108",
+            "battery_diameter": 11.6,
+            "battery_height": 10.8,
         },
     },
-    "order": [
-        "CR1632",
-        "CR2025",
-    ],
 }
 
 # -----------------------
 
-class ButtonCellStorageConfig():
+class CoinCellStorageConfig():
     def __init__(self, config):
         self.config = config
 
@@ -47,8 +171,8 @@ class ButtonCellStorageConfig():
 
     def len(self):
         return len(self.config["order"])
-    
-class ButtonCellTower():
+
+class CoinCellTower():
     def __init__(self, config):
         self.definition = config
 
@@ -110,7 +234,7 @@ class ButtonCellTower():
     def width(self):
         return self.tower_width
 
-class ButtonCellStorage():
+class CoinCellStorage():
     def __init__(self, config):
         self.config = config
 
@@ -121,7 +245,7 @@ class ButtonCellStorage():
         max_tower_depth = 0
         towers = []
         for i in range(0, self.config.len()):
-            tower = ButtonCellTower(self.config.get(i))
+            tower = CoinCellTower(self.config.get(i))
             towers.append(tower)
             if max_tower_height < tower.tower_height:
                 max_tower_height = tower.tower_height
@@ -141,6 +265,6 @@ class ButtonCellStorage():
         return u
 
 if __name__ == '__main__':
-    config = ButtonCellStorageConfig(storage_unit_def)
-    a = ButtonCellStorage(config).assemble()
-    scad_render_to_file(a, "button-cell-holder.scad", file_header=f'$fn = {SEGMENTS};', include_orig_code=True)
+    config = CoinCellStorageConfig(storage_unit_def)
+    a = CoinCellStorage(config).assemble()
+    scad_render_to_file(a, "coin-cell-storage.scad", file_header='$fn = {SEGMENTS};', include_orig_code=True)
